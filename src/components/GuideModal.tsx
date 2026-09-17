@@ -32,12 +32,12 @@ export const GuideModal: React.FC<GuideModalProps> = ({ isOpen, onClose }) => {
               Cara Kerja: Real-ESRGAN ONNX
             </h4>
             <p className="text-slate-300 leading-relaxed">
-              Tool ini menggunakan <strong className="text-indigo-300">model neural network Real-ESRGAN yang sesungguhnya</strong> (RRDB architecture) yang berjalan 100% di browser melalui ONNX Runtime Web dengan akselerasi WebGL. Tidak ada gambar yang dikirim ke server — semua inferensi terjadi di perangkat Anda.
+              Tool ini menggunakan <strong className="text-indigo-300">model neural network Real-ESRGAN yang sesungguhnya</strong> (RRDB architecture) yang berjalan 100% di browser melalui ONNX Runtime Web WASM. Tidak ada gambar yang dikirim ke server — semua inferensi terjadi di perangkat Anda.
             </p>
             <div className="grid grid-cols-3 gap-2 pt-1">
               {[
                 { title: 'Download Sekali', desc: 'Model ~17–65 MB, tersimpan di cache browser' },
-                { title: 'GPU Acceleration', desc: 'WebGL backend untuk inferensi cepat' },
+                { title: 'Local Inference', desc: 'WASM backend berjalan langsung di browser' },
                 { title: '100% Lokal', desc: 'Privasi terjaga, tidak perlu internet saat proses' },
               ].map((item) => (
                 <div key={item.title} className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800">
@@ -89,10 +89,10 @@ export const GuideModal: React.FC<GuideModalProps> = ({ isOpen, onClose }) => {
               Tips Performa
             </h4>
             <ul className="list-disc list-inside space-y-1 text-slate-400 pl-1">
-              <li>Gunakan Chrome/Edge terbaru untuk akselerasi WebGL terbaik.</li>
-              <li>Gambar besar (&gt;2000px) dibagi menjadi tile 128×128 secara otomatis.</li>
-              <li>Model foto (65 MB) lebih lambat dari model anime (17 MB) — wajar.</li>
-              <li>Batch queue diproses berurutan — tidak membebani memori GPU.</li>
+              <li>Gunakan Chrome/Edge terbaru untuk dukungan WASM terbaik.</li>
+              <li>Gambar besar (&gt;2000px) dibagi menjadi tile 64×64 secara otomatis.</li>
+              <li>Model foto (65 MB) lebih lambat dari model anime (65 MB) — wajar.</li>
+              <li>Batch queue diproses berurutan untuk menjaga penggunaan memori.</li>
             </ul>
           </div>
 

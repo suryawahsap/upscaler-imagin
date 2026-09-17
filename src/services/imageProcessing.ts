@@ -174,7 +174,7 @@ async function loadModel(
   }
 
   // 3. Create ONNX session
-  onProgress?.(32, 'Menginisialisasi ONNX Runtime (WebGL/WASM)...');
+  onProgress?.(32, 'Menginisialisasi ONNX Runtime (WASM)...');
 
   if (typeof ort === 'undefined') {
     throw new Error(
@@ -183,7 +183,7 @@ async function loadModel(
   }
 
   const session = await ort.InferenceSession.create(buffer, {
-    executionProviders: ['webgl', 'wasm'],
+    executionProviders: ['wasm'],
     graphOptimizationLevel: 'all',
   });
 

@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
               </h1>
             </div>
             <p className="text-xs text-slate-400 hidden sm:block">
-              Real-ESRGAN ONNX Engine · WebGL GPU Acceleration · 100% Lokal
+              Real-ESRGAN ONNX Engine · WASM · 100% Lokal
             </p>
           </div>
         </div>

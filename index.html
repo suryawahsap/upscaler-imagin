@@ -6,16 +6,14 @@
     <title>Real-ESRGAN AI Upscaler · ONNX</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
 
-    <!-- ONNX Runtime Web — loads WebGL + WASM backends -->
+    <!-- ONNX Runtime Web — WASM backend -->
     <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js"></script>
 
-    <!-- Configure ONNX wasm paths -->
+    <!-- Configure ONNX WASM paths -->
     <script>
       if (typeof ort !== 'undefined') {
         ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/';
         ort.env.wasm.numThreads = 1;
-        // Keep WebGL compatible with the model's nearest-neighbor Resize op.
-        ort.env.webgl.pack = false;
       }
     </script>
   </head>
