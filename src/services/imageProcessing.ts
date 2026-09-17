@@ -225,7 +225,7 @@ export async function getImageDimensions(
 }
 
 // ─── ONNX Tile Inference ─────────────────────────────────────────────────────
-const TILE_SIZE    = 128;   // input tile size (px)
+const TILE_SIZE    = 64;    // input tile size required by the bundled ONNX models
 const TILE_OVERLAP = 8;     // overlap to avoid seam artifacts
 const SCALE        = 4;     // all models output 4×
 
@@ -286,6 +286,18 @@ async function runTileInference(
   return outImgData;
 }
 
+function cropImageData(
+  imageData: ImageData,
+  width: number,
+  height: number
+): ImageData {
+  const canvas = document.createElement('canvas');
+  canvas.width = imageData.width;
+  canvas.height = imageData.height;
+  canvas.getContext('2d')!.putImageData(imageData, 0, 0);
+  return canvas.getContext('2d')!.getImageData(0, 0, width, height);
+}
+
 // ─── Tiled upscale pipeline ──────────────────────────────────────────────────
 async function upscaleWithONNX(
   session: any,
@@ -317,11 +329,34 @@ async function upscaleWithONNX(
       const srcTileW = Math.min(TILE_SIZE, srcW - srcX);
       const srcTileH = Math.min(TILE_SIZE, srcH - srcY);
 
-      // Extract tile
-      const tileImageData = srcCtx.getImageData(srcX, srcY, srcTileW, srcTileH);
+      // Pad edge tiles to the fixed model input shape, then crop their output.
+      const paddedTile = document.createElement('canvas');
+      paddedTile.width = TILE_SIZE;
+      paddedTile.height = TILE_SIZE;
+      paddedTile.getContext('2d')!.drawImage(
+        srcCanvas,
+        srcX,
+        srcY,
+        srcTileW,
+        srcTileH,
+        0,
+        0,
+        srcTileW,
+        srcTileH
+      );
+      const tileImageData = paddedTile.getContext('2d')!.getImageData(
+        0,
+        0,
+        TILE_SIZE,
+        TILE_SIZE
+      );
 
       // Run ONNX
-      const resultImageData = await runTileInference(session, tileImageData);
+      const resultImageData = cropImageData(
+        await runTileInference(session, tileImageData),
+        srcTileW * SCALE,
+        srcTileH * SCALE
+      );
 
       // Calculate destination (strip overlap from output)
       const overlapOutL = (tx === 0 ? 0 : TILE_OVERLAP) * SCALE;
