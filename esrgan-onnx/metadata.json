@@ -1,0 +1,6 @@
+{
+  "name": "Real-ESRGAN Image Upscaler",
+  "description": "Tool upscale gambar batch bertenaga Real-ESRGAN dengan opsi skala 2x-4x, parameter kontrol noise, pratinjau interaktif split-slider, ekspor multi-format & unduh ZIP, serta pelacakan riwayat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
