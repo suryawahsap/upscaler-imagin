@@ -114,7 +114,7 @@ async function loadModel(
   if (sessionCache[modelId]) return sessionCache[modelId];
 
   // 1. Check IndexedDB cache
-  const cacheKey = `${modelId}-v2`;
+  const cacheKey = `${modelId}-v3`;
   let buffer = await getCachedModel(cacheKey);
 
   if (!buffer) {
