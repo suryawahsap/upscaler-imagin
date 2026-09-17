@@ -226,7 +226,7 @@ export async function getImageDimensions(
 
 // ─── ONNX Tile Inference ─────────────────────────────────────────────────────
 const TILE_SIZE    = 64;    // input tile size required by the bundled ONNX models
-const TILE_OVERLAP = 8;     // overlap to avoid seam artifacts
+const TILE_OVERLAP = 4;     // small overlap that reduces the number of tiles
 const SCALE        = 4;     // all models output 4×
 
 /**
