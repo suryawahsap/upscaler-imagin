@@ -2,7 +2,7 @@
  * imageProcessing.ts — Real-ESRGAN ONNX Inference Engine
  *
  * Uses real Real-ESRGAN neural network models via ONNX Runtime Web.
- * Models are loaded from Hugging Face and cached in IndexedDB.
+ * Models are loaded from the app's public folder and cached in IndexedDB.
  *
  * Architecture:
  *  1. Load ONNX model (cached after first download)
@@ -31,36 +31,35 @@ export interface UpscaleResult {
 }
 
 // ─── Model Registry ──────────────────────────────────────────────────────────
-// ONNX models hosted on Hugging Face Hub (public, no auth required)
-// Each model is ~17-65 MB and cached in IndexedDB after first download.
+// ONNX models bundled in public/models and cached in IndexedDB after first download.
 const MODEL_URLS: Record<string, string> = {
-  // Vector / Ilustrasi / Anime — lightweight 17 MB model, RRDB anime-optimized
+  // Vector / Ilustrasi / Anime — lightweight RRDB model
   'realesrgan-x4plus-anime':
-    'https://huggingface.co/ai-forever/Real-ESRGAN/resolve/main/RealESRGAN_x4plus_anime_6B.onnx',
+    '/models/RealESRGAN_x4plus_anime_6B.onnx',
 
   // 3D Render / CGI / Game Asset — animevideov3 generalizes well to CG
   'realesr-animevideov3':
-    'https://huggingface.co/ai-forever/Real-ESRGAN/resolve/main/RealESRGAN_x4plus_anime_6B.onnx',
+    '/models/RealESRGAN_x4plus_anime_6B.onnx',
 
   // Photo Realistic — full 65 MB RRDB model
   'realesrgan-x4plus':
-    'https://huggingface.co/ai-forever/Real-ESRGAN/resolve/main/RealESRGAN_x4plus.onnx',
+    '/models/RealESRGAN_x4plus.onnx',
 
   // General Purpose — lightweight general model
   'realesr-general-x4v3':
-    'https://huggingface.co/ai-forever/Real-ESRGAN/resolve/main/RealESRGAN_x4plus_anime_6B.onnx',
+    '/models/RealESRGAN_x4plus_anime_6B.onnx',
 };
 
-// Fallback CDN (jsDelivr mirror)
+// Fallback URLs for environments where the bundled assets are unavailable.
 const MODEL_URLS_FALLBACK: Record<string, string> = {
   'realesrgan-x4plus-anime':
-    'https://cdn.jsdelivr.net/npm/@ai-forever/real-esrgan-model@1.0.0/models/RealESRGAN_x4plus_anime_6B.onnx',
+    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model_fp16.onnx',
   'realesr-animevideov3':
-    'https://cdn.jsdelivr.net/npm/@ai-forever/real-esrgan-model@1.0.0/models/RealESRGAN_x4plus_anime_6B.onnx',
+    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model_fp16.onnx',
   'realesrgan-x4plus':
-    'https://cdn.jsdelivr.net/npm/@ai-forever/real-esrgan-model@1.0.0/models/RealESRGAN_x4plus.onnx',
+    'https://huggingface.co/Meeperomi/RealESRGAN_x4-onnx/resolve/main/RealESRGAN_x4.onnx',
   'realesr-general-x4v3':
-    'https://cdn.jsdelivr.net/npm/@ai-forever/real-esrgan-model@1.0.0/models/RealESRGAN_x4plus_anime_6B.onnx',
+    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model_fp16.onnx',
 };
 
 // ─── IndexedDB Cache ─────────────────────────────────────────────────────────
