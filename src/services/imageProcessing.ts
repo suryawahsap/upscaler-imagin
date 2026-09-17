@@ -53,13 +53,13 @@ const MODEL_URLS: Record<string, string> = {
 // Fallback URLs for environments where the bundled assets are unavailable.
 const MODEL_URLS_FALLBACK: Record<string, string> = {
   'realesrgan-x4plus-anime':
-    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model_fp16.onnx',
+    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model.onnx',
   'realesr-animevideov3':
-    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model_fp16.onnx',
+    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model.onnx',
   'realesrgan-x4plus':
     'https://huggingface.co/Meeperomi/RealESRGAN_x4-onnx/resolve/main/RealESRGAN_x4.onnx',
   'realesr-general-x4v3':
-    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model_fp16.onnx',
+    'https://huggingface.co/imgdesignart/realesrgan-x4-onnx/resolve/main/onnx/model.onnx',
 };
 
 // ─── IndexedDB Cache ─────────────────────────────────────────────────────────
@@ -114,7 +114,7 @@ async function loadModel(
   if (sessionCache[modelId]) return sessionCache[modelId];
 
   // 1. Check IndexedDB cache
-  const cacheKey = `${modelId}-v3`;
+  const cacheKey = `${modelId}-v4`;
   let buffer = await getCachedModel(cacheKey);
 
   if (!buffer) {
