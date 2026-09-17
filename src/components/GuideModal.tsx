@@ -90,7 +90,7 @@ export const GuideModal: React.FC<GuideModalProps> = ({ isOpen, onClose }) => {
             </h4>
             <ul className="list-disc list-inside space-y-1 text-slate-400 pl-1">
               <li>Gunakan Chrome/Edge terbaru untuk akselerasi WebGL terbaik.</li>
-              <li>Gambar besar (>2000px) dibagi menjadi tile 128×128 secara otomatis.</li>
+              <li>Gambar besar (&gt;2000px) dibagi menjadi tile 128×128 secara otomatis.</li>
               <li>Model foto (65 MB) lebih lambat dari model anime (17 MB) — wajar.</li>
               <li>Batch queue diproses berurutan — tidak membebani memori GPU.</li>
             </ul>
